@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>{{ author.name }}</title>
+	</head>
+	<body>
+		<div id="wrapper">
+			<div id="header">
+				<h1>Welcome, {{ alias }}!</h1>
+				<a href="/books/add_review">Add Book and Review</a>
+				<a href="/authors">Author Directory</a>
+				<a href="/logout">Logout</a>
+				<hr>
+			</div>
+			<h1>{{ author.name }}</h1>
+			<div id="book_list">
+				<ul>
+				{% for book in books %}
+						<li><a href="/books/{{ book.id }}">{{ book }}</a></li>
+				{% endfor %}
+				</ul>
+			</div>
+		</div>
+
+	</body>
+</html>

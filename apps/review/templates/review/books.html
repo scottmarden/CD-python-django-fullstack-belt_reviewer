@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Books Home</title>
+	</head>
+	<body>
+		<div id="wrapper">
+			<div id="header">
+				<h1>Welcome, {{ alias }}!</h1>
+				<a href="/books/add_review">Add Book and Review</a>
+				<a href="/authors">Author Directory</a>
+				<a href="/logout">Logout</a>
+				<hr>
+			</div>
+			<div id="content">
+				<h3>Recent Book Reviews:</h3>
+					{% for review in recent_reviews %}
+						<hr>
+						<a href="/books/{{ review.book.id }}">{{ review.book.title }}</a>
+						<h5>Rating: {{ review.rating }}/5</h5>
+						<h4><a href="/user/{{ review.reviewer.id }}">{{ review.reviewer.alias }}</a>: {{ review.review }}</h4>
+						<h5>Posted on {{ review.created_at }}</h5>
+					{% endfor %}
+			</div>
+			<div class="sidebar">
+				{% if other_books %}
+				<fieldset>
+					<legend>Other Books with Reviews</legend>
+						<ul>
+						{% for book in other_books %}
+								<li><a href="/books/{{ book.id }}">{{ book }}</a></li>
+						{% endfor %}
+						</ul>
+					{% endif %}
+				</fieldset>
+			</div>
+		</div>
+	</body>
+</html>

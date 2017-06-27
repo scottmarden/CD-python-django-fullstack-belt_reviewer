@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>{{ user.alias }}'s Profile</title>
+	</head>
+	<body>
+		<div id="wrapper">
+			<div id="header">
+				<h1>Welcome, {{ alias }}!</h1>
+				<a href="/">Home</a>
+				<a href="/books/add_review">Add Book and Review</a>
+				<a href="/authors">Author Directory</a>
+				<a href="/logout">Logout</a>
+				<hr>
+			</div>
+			<div id="content">
+				<h1>{{ user.alias }}'s Profile</h1>
+				<h3>Name: {{ user.name }}</h3>
+				<h3>Email: {{ user.email }}</h3>
+				<h3>Reviews: {{ num_reviews }}</h3>
+				{% if reviews %}
+					<h4>Posted reviews on the following books:</h4>
+					<ul>
+					{% for review in reviews %}
+						<li><a href="/books/{{ review.book.id }}">{{ review.book }}</a></li>
+					{% endfor %}
+					</ul>
+				{% else %}
+					<h3>{{ user.alias }} has not reviewed any books yet!</h3>
+				{% endif %}
+			</div>
+		</div>
+	</body>
+</html>

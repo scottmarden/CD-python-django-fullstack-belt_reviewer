@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Reviews for {{ book }}</title>
+	</head>
+	<body>
+		<div id="wrapper">
+			<div id="header">
+				<h1>Welcome, {{ alias }}!</h1>
+				<a href="/">Home</a>
+				<a href="/books/add_review">Add Book and Review</a>
+				<a href="/logout">Logout</a>
+				<hr>
+			</div>
+			<div id="content">
+				<h2>Reviews for {{ book }}</h2>
+				<h4>Author(s):</h4>
+					<ul>
+				{% for author in authors %}
+				<li><a href="/authors/{{ author.id }}">{{ author }}</a></li>
+				{% endfor %}
+					</ul>
+				{% if reviews %}
+					{% for review in reviews %}
+						<hr>
+						<h5>Rating: {{ review.rating }}/5</h5>
+						<h4><a href="/user/{{ review.reviewer.id }}">{{ review.reviewer.alias }}</a>:{{ review.review }}</h4>
+						<h5>Posted on {{ review.created_at|date:"M d, Y" }}</h5>
+						{% if review.reviewer.alias == alias %}
+							<a href="/reviews/delete/{{ review.id }}">Delete this review</a>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+			</div>
+			<div id="new_review">
+				<fieldset>
+					<legend>Add Review for this book</legend>
+					<form action="/books/process_review" method="post">
+						{% csrf_token %}
+						<input type="hidden" name="title" value="{{ book.title }}">
+						<input type="hidden" name="author" value="{{ first_author }}">
+						<label for="review">Review:<textarea name="review" rows=8 cols = 60></textarea></label>
+						<label for="rating">Rating:
+							<select name="rating">
+								<option value="5">5</option>
+								<option value="4">4</option>
+								<option value="3">3</option>
+								<option value="2">2</option>
+								<option value="1">1</option>
+							</select>
+						</label> out of 5
+						<button type="submit">Add Book and Review</button>
+					</form>
+			</div>
+	</div>
+	</body>
+</html>
