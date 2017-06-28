@@ -7,14 +7,26 @@
 	<body>
 		<div id="wrapper">
 			<div id="header">
-				<h1>Welcome, {{ alias }}!</h1>
+				<h1>Welcome, {{ request.session.alias }}!</h1>
 				<a href="/">Home</a>
 				<a href="/books/add_review">Add Book and Review</a>
+				<a href="/authors">Author Directory</a>
+				<a href="/user/{{ request.session.user_id }}">Profile</a>
+				<a href="/user_favorites">Favorite Books</a>
 				<a href="/logout">Logout</a>
 				<hr>
 			</div>
 			<div id="content">
 				<h2>Reviews for {{ book }}</h2>
+				{% if book in favorites %}
+					<h5>This book is in <a href="/user_favorites">your favorites</a>.</h5>
+				{% else %}
+					<form action="/new_favorite" method="post">
+						{% csrf_token %}
+						<input type="hidden" name="book_id" value="{{ book.id }}" />
+						<button type="submit">Favorite</button>
+					</form>
+				{% endif %}
 				<h4>Author(s):</h4>
 					<ul>
 				{% for author in authors %}

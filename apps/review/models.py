@@ -70,6 +70,7 @@ class User(models.Model):
 	alias = models.CharField(max_length=255)
 	email = models.CharField(max_length=255)
 	password = models.CharField(max_length=255)
+
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
@@ -109,23 +110,21 @@ class BookManager(models.Manager):
 		print title
 		try:
 			book = Book.objects.get(title__contains=title)
-			print book
 		except:
-			print "book not found, adding"
-			print "*"*50
-			print title
-			print "*"*50
 			book = Book.objects.create(title=title)
-			print book
 		return book
 
-	def random_books(self):
-		pass
+	def new_favorite(self, book_id, user_id):
+		user = User.objects.get(id=user_id)
+		book = Book.objects.get(id=book_id)
+		new_like = user.favorited_books.add(book)
+		return new_like
 
 
 class Book(models.Model):
 	title = models.CharField(max_length=255)
 	authors = models.ManyToManyField(Author, related_name='books_written')
+	favorites = models.ManyToManyField(User, related_name='favorited_books')
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 

@@ -12,6 +12,9 @@ urlpatterns = [
 	url(r'^user/(?P<id>\d+$)', views.user_profile),
 	url(r'^authors/(?P<id>\d+$)', views.author_profile),
 	url(r'^reviews/delete/(?P<id>\d+$)', views.delete_review),
-	url(r'^authors', views.author_directory),
+	url(r'^authors$', views.author_directory),
+	url(r'^new_favorite$', views.favorite),
+	url(r'^user_favorites$', views.user_favorites),
+	url(r'^user_non_favorites$', views.user_non_favorites),
 	url(r'^logout$', views.logout),
 ]
